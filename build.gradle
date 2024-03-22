@@ -1,19 +1,65 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //lombok사용
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //Mapstruct
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    //Swagger
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    //env-hide
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    //mariadb
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
+    //JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    //security
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //javax.xml.bind.DatatypeConverter 에러나서 해야됨⬇️
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+
+    runtimeOnly 'mysql:mysql-connector-java:8.0.26'
+
+    //mariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+
+    //security 무슨 에러 난다는거지?
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.security:spring-security-web:5.0.0.RELEASE'
+//    implementation 'org.springframework.security:spring-security-config:5.0.0.RELEASE'
+
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('bootJar') {
+    mainClass= 'com.example.supercoding2stsohee.Supercoding2stSoheeApplication'
 }
