@@ -9,15 +9,12 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
-
-datasource:
-  username: ${DATABASE_USERNAME}
-  password: ${DATABASE_PASSWORD}
-  driver-class-name: org.mariadb.jdbc.Driver
+  datasource:
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
 #  url: jdbc:mariadb://sohan2.c7suy242wrpp.eu-west-1.rds.amazonaws.com:3306/shopping_mall?useUnicode=true&characterEncoding=UTF-8
-  url: jdbc:mysql://localhost:3306/BackEndProject_2_verSoh?useUnicode=true&characterEncoding=UTF-8
-
-
+    url: jdbc:mysql://localhost:3306/BackEndProject_2_verSoh?useUnicode=true&characterEncoding=UTF-8
 
   jpa:
     show-sql: true
