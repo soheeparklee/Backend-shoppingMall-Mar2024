@@ -1,6 +1,8 @@
 package org.shoppingMall.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.shoppingMall.service.exceptions.CustomAccessDeniedHandler;
+import org.shoppingMall.service.exceptions.CustomAuthenticationEntryPoint;
 import org.shoppingMall.web.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +35,10 @@ public class SecurityConfig {
                                 .requestMatchers("/resources/static/**", "/sign-up", "/login").permitAll()
                                 .requestMatchers("/test").hasRole("USER")
                 )
+                .exceptionHandling(e->{
+                    e.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                    e.accessDeniedHandler(new CustomAccessDeniedHandler());
+                })
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 
         ;
