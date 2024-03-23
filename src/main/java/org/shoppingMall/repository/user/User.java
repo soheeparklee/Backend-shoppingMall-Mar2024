@@ -48,16 +48,16 @@ public class User {
     @Column(name= "status", nullable = false)
     private String status;
 
-    @Column(name= "failiure_count", nullable = false)
-    private Integer failiureCount;
+    @Column(name= "failure_count", nullable = false)
+    private Integer failureCount;
 
     @Column(name= "create_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name= "delete_at", nullable = false)
+    @Column(name= "delete_at")
     private LocalDateTime deletedAt;
 
-    @Column(name= "lock_at", nullable = false)
+    @Column(name= "lock_at")
     private LocalDateTime lockedAt;
 
     @OneToMany(mappedBy= "user")
