@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductOptionJpa implements JpaRepository<ProductOption, Integer> {
+public interface ProductOptionJpa extends JpaRepository<ProductOption, Integer> {
 }

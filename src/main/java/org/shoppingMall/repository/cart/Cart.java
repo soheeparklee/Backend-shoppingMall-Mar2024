@@ -2,6 +2,7 @@ package org.shoppingMall.repository.cart;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.shoppingMall.repository.productOption.ProductOption;
 import org.shoppingMall.repository.user.User;
 
 @Entity

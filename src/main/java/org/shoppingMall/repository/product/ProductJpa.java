@@ -1,8 +1,8 @@
-package org.shoppingMall.repository.cart;
+package org.shoppingMall.repository.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartJpa extends JpaRepository<Cart, Integer> {
+public interface ProductJpa extends JpaRepository<Product, Integer> {
 }
