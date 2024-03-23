@@ -21,7 +21,7 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-        User user = userJpa.findById(1).orElseThrow(() -> new NotFoundException("ss"));
+        User user = userJpa.findById(7).orElseThrow(() -> new NotFoundException("ss"));
 
         Integer userId = user.getUserId();
 

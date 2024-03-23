@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .formLogin(f-> f.disable())
                 .rememberMe(r-> r.disable())
                 .sessionManagement(s-> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(a->
+                .authorizeHttpRequests(a->
                         a
                                 .requestMatchers("/resources/static/**", "/sign-up", "/login").permitAll()
                                 .requestMatchers("/test").hasRole("USER")
@@ -40,7 +40,6 @@ public class SecurityConfig {
                     e.accessDeniedHandler(new CustomAccessDeniedHandler());
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-
         ;
         return http.build();
 
