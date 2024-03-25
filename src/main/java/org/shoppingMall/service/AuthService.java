@@ -10,6 +10,7 @@ import org.shoppingMall.repository.userRoles.UserRoles;
 import org.shoppingMall.repository.userRoles.UserRolesJpa;
 import org.shoppingMall.web.DTO.LoginRequest;
 import org.shoppingMall.web.DTO.SignUpRequest;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.NotAcceptableStatusException;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -74,6 +76,8 @@ public class AuthService {
             User user= userJpa.findByEmailFetchJoin(loginRequest.getEmail())
                     .orElseThrow(()-> new NullPointerException("해당 이메일로 계정을 찾을 수 없습니다."));
 
+            if(user.getStatus().equals("withdrwal")) throw new AccessDeniedException("탈퇴한 회원입니다.");
+
             List<String> roles= user.getUserRoles().stream().map(UserRoles::getRoles).map(Roles::getName).collect(Collectors.toList());
             return jwtTokenProvider.createToken(loginRequest.getEmail(), roles);
 
@@ -82,4 +86,29 @@ public class AuthService {
             throw new NotAcceptableStatusException("login not possible");
         }
     }
+
+    public String getNickName(LoginRequest loginRequest) {
+        User user= userJpa.findByEmailFetchJoin(loginRequest.getEmail())
+                .orElseThrow(()-> new NullPointerException("해당 이메일로 계정을 찾을 수 없습니다."));
+        return user.getNickName();
+    }
+
+
+//    public boolean logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+//        Authentication auth= SecurityContextHolder.getContext().getAuthentication(); //JwtAuthenticationFilter에서 setAuthentication했음
+//        if(auth != null){
+//            String currentToken= jwtTokenProvider.resolveToken(httpServletRequest);
+//            jwtTokenProvider.addToBlackList(currentToken);
+//            new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, auth);
+//        }
+//        return true;
+//    }
+
+    public void withdrawl(String userEmail) {
+        User user= userJpa.findByEmail(userEmail)
+                .orElseThrow(()-> new NotFoundException("해당 이메일로 계정을 찾을 수 없습니다."));
+        user.setStatus("withdrawl");
+        userJpa.save(user);
+    }
 }
+

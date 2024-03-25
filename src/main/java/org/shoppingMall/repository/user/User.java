@@ -60,7 +60,7 @@ public class User {
     @Column(name= "lock_at")
     private LocalDateTime lockedAt;
 
-    @OneToMany(mappedBy= "user")
+    @OneToMany(mappedBy= "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRoles> userRoles;
 
 }

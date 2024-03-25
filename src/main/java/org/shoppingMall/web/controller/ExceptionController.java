@@ -17,8 +17,7 @@ public class ExceptionController {
     }
 
     @GetMapping(value="/access-denied")
-    public void accessDeniedException(){
-        throw new NullPointerException("권한이 없습니다.");
+    public void accessDeniedException(){ throw new NullPointerException("권한이 없습니다.");
 
     }
 }
