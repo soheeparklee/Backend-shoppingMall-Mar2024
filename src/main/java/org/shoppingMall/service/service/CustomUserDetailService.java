@@ -1,4 +1,4 @@
-package org.shoppingMall.service;
+package org.shoppingMall.service.service;
 
 import lombok.RequiredArgsConstructor;
 import org.shoppingMall.repository.roles.Roles;

@@ -4,19 +4,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.shoppingMall.config.security.JwtTokenProvider;
-import org.shoppingMall.service.AuthService;
-import org.shoppingMall.web.DTO.LoginRequest;
+import org.shoppingMall.service.service.AuthService;
+import org.shoppingMall.web.DTO.sign.LoginRequest;
 import org.shoppingMall.web.DTO.ResponseDTO;
-import org.shoppingMall.web.DTO.SignUpRequest;
+import org.shoppingMall.web.DTO.sign.SignUpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,30 +40,18 @@ public class SignController {
         return new ResponseDTO(HttpStatus.OK.value(), "Welcome, "+ nickName + "! You are successfully logged in.");
      }
 
-//     @PostMapping("/logout")
-//     public ResponseDTO logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-//        boolean isSuccess= authService.logout(httpServletRequest, httpServletResponse);
-//        if(isSuccess) return new ResponseDTO(200, "You are successfully logged out." );
-//        else return new ResponseDTO(400, "logout fail");
-//     }
-
-    @PostMapping("/logout")
-    public ResponseDTO logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse ){
-        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
-        if(auth != null) {
-            String currentToken= jwtTokenProvider.resolveToken(httpServletRequest);
-            jwtTokenProvider.addToBlackList(currentToken);
-            new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, auth);
-        }
-
-        return new ResponseDTO(HttpStatus.OK.value(), "로그아웃 성공");
-    }
+     @PostMapping("/logout")
+     public ResponseDTO logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        boolean isSuccess= authService.logout(httpServletRequest, httpServletResponse);
+        if(isSuccess) return new ResponseDTO(200, "You are successfully logged out." );
+        else return new ResponseDTO(400, "logout fail");
+     }
 
     @DeleteMapping("/withdrawl")
     public ResponseDTO withdrawl(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+        String userEmail= jwtTokenProvider.getUserEmail(jwtTokenProvider.resolveToken(httpServletRequest));
         if(auth != null){
-            String userEmail= jwtTokenProvider.getUserEmail(jwtTokenProvider.resolveToken(httpServletRequest));
             authService.withdrawl(userEmail);
 
             String currentToken= jwtTokenProvider.resolveToken(httpServletRequest);
@@ -75,6 +59,6 @@ public class SignController {
             new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, auth);
         }
 
-        return new ResponseDTO(HttpStatus.OK.value(), "회원탈퇴 성공");
+        return new ResponseDTO(HttpStatus.OK.value(), "withdrawl successful "+ userEmail);
     }
 }

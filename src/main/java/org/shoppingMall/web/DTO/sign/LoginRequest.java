@@ -1,4 +1,4 @@
-package org.shoppingMall.web.DTO;
+package org.shoppingMall.web.DTO.sign;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
