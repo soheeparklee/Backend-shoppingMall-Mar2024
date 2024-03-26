@@ -32,9 +32,10 @@ public class SecurityConfig {
                 .sessionManagement(s-> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a->
                         a
-                                .requestMatchers("/resources/static/**", "/auth/sign-up", "/auth/login").permitAll()
+                                .requestMatchers("/resources/static/**", "/auth/sign-up", "/auth/login", "/auth/logout", "/auth/withdrawl").permitAll()
                                 .requestMatchers("/test").hasRole("USER")
                 )
+
                 .exceptionHandling(e->{
                     e.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
                     e.accessDeniedHandler(new CustomAccessDeniedHandler());

@@ -20,7 +20,7 @@ import java.util.*;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
-    @Value("${jwtpassword.source}")
+    @Value("${JWT_SECRET_KEY}")
     private String secretKey;
     private String key;
 
