@@ -32,6 +32,6 @@ public class UserService {
                 .status(user.getStatus())
                 .failureCount(user.getFailureCount())
                 .build();
-                return new ResponseDTO(HttpStatus.OK.value(), "Find user "+ user.getNickName() + "success", userResponse);
+                return new ResponseDTO(HttpStatus.OK.value(), "Find user "+ user.getNickName() + " success", userResponse);
     }
 }

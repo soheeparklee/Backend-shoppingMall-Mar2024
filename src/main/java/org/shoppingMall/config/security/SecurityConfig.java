@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .formLogin(f-> f.disable())
                 .rememberMe(r-> r.disable())
                 .sessionManagement(s-> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(a->
+                .authorizeRequests(a->
                         a
                                 .requestMatchers("/resources/static/**", "/auth/sign-up", "/auth/login", "/auth/logout", "/auth/withdrawl").permitAll()
                                 .requestMatchers("/test").hasRole("USER")
