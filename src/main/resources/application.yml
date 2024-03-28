@@ -23,5 +23,4 @@ jwtpassword:
   source: ${JWT_SECRET_KEY}
 
   logging:
-    level:
-      org.hibernate.SQL: debug
+    level: debug

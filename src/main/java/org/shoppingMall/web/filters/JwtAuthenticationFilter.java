@@ -29,6 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch(JwtException e){
             e.printStackTrace();
             throw new JwtException("해당 토큰은 만료되었거나 유효하지 않습니다.");
+        } catch(Exception e){
+            e.printStackTrace();
+            throw new JwtException("모든 예외 잡기");
         }
         filterChain.doFilter(request, response);
     }

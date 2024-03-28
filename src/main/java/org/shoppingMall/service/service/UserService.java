@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserJpa userJpa;
     public ResponseDTO findUserByToken(CustomUserDetails customUserDetails) {
-        User user= userJpa.findByEmailFetchJoin(customUserDetails.getEmail())
+        User user= userJpa.findByEmail(customUserDetails.getEmail())
                 .orElseThrow(()-> new NotFoundException("Cannot find user with email: "+ customUserDetails.getEmail()));
+
+        System.out.println(user);
 
         UserResponse userResponse= UserResponse.builder()
                 .userId(user.getUserId())

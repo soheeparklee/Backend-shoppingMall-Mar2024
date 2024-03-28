@@ -35,7 +35,9 @@
 //                "org.shoppingMall.repository.review",
 //                "org.shoppingMall.repository.roles",
 //                "org.shoppingMall.repository.userRoles",
-//                "org.shoppingMall.repository.user"
+//                "org.shoppingMall.repository.user",
+//                "org.shoppingMall.repository.userDetails",
+//                "org.shoppingMall.repository.userRoles"
 //        },
 //        entityManagerFactoryRef = "localContainerEntityManagerFactoryBean",
 //        transactionManagerRef = "tm"
@@ -67,7 +69,9 @@
 //                "org.shoppingMall.repository.review",
 //                "org.shoppingMall.repository.roles",
 //                "org.shoppingMall.repository.userRoles",
-//                "org.shoppingMall.repository.user"
+//                "org.shoppingMall.repository.user",
+//                "org.shoppingMall.repository.userDetails",
+//                "org.shoppingMall.repository.userRoles"
 //        );
 //        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 //        lemfb.setJpaVendorAdapter(vendorAdapter);
