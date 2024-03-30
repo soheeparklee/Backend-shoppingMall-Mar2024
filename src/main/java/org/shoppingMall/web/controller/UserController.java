@@ -6,11 +6,10 @@ import org.shoppingMall.repository.user.UserJpa;
 import org.shoppingMall.repository.userDetails.CustomUserDetails;
 import org.shoppingMall.service.service.UserService;
 import org.shoppingMall.web.DTO.ResponseDTO;
+import org.shoppingMall.web.DTO.user.UserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +24,12 @@ public class UserController {
         } else {
             return new ResponseDTO(HttpStatus.BAD_REQUEST.value(), "CustomUserDetails is null", null);
         }
+    }
+
+    @Operation(summary = "유저 정보 수정")
+    @PutMapping("/update")
+    public ResponseDTO updateUser(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                  @RequestBody UserRequest userRequest){
+        return userService.updateUser(customUserDetails, userRequest);
     }
 }
