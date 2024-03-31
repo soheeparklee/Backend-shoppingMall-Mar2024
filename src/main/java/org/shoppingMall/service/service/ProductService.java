@@ -13,7 +13,10 @@ import org.shoppingMall.repository.user.UserJpa;
 import org.shoppingMall.repository.userDetails.CustomUserDetails;
 import org.shoppingMall.service.exceptions.NotFoundException;
 import org.shoppingMall.web.DTO.ResponseDTO;
+import org.shoppingMall.web.DTO.product.ProductMainResponse;
 import org.shoppingMall.web.DTO.product.ProductRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +72,13 @@ public class ProductService {
             npe.printStackTrace();
             throw new NullPointerException("No token"); //run, postman모두에 보임
         }
+    }
+
+    public ResponseDTO findAllProducts(Pageable pageable) {
+        Page<ProductMainResponse> productMainResponses= productJpa.findAllProducts(pageable);
+        if(productMainResponses.isEmpty()) throw new NotFoundException("No Products registered to be sold");
+
+        return new ResponseDTO(HttpStatus.OK.value(), "Main page find success", productMainResponses);
+
     }
 }
