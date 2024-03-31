@@ -29,40 +29,45 @@ public class ProductService {
     private final ProductOptionJpa productOptionJpa;
     private final ReviewJpa reviewJpa;
     public ResponseDTO registerProduct(CustomUserDetails customUserDetails, ProductRequest productRequest) {
-        User user= userJpa.findByEmail(customUserDetails.getEmail())
-                .orElseThrow(()-> new NotFoundException("Cannot find user with email: "+ customUserDetails.getEmail()));
-        Product product= Product.builder()
-                .user(user)
-                .productName(productRequest.getProductName())
-                .productPrice(productRequest.getProductPrice())
-                .category(productRequest.getCategory())
-                .productStatus(productRequest.getProductStatus())
-                .rating(0F)
-                .createdAt(LocalDateTime.now())
-                .build();
-        productJpa.save(product);
+        try {
+            User user = userJpa.findByEmail(customUserDetails.getEmail())
+                    .orElseThrow(() -> new NotFoundException("Cannot find user with email: " + customUserDetails.getEmail()));
+            Product product = Product.builder()
+                    .user(user)
+                    .productName(productRequest.getProductName())
+                    .productPrice(productRequest.getProductPrice())
+                    .category(productRequest.getCategory())
+                    .productStatus(productRequest.getProductStatus())
+                    .rating(0F)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            productJpa.save(product);
 
-        List<ProductPhoto> productPhotos= productRequest.getPhotoRequestList()
-                .stream()
-                .map((pp)->ProductPhoto.builder()
-                        .product(product)
-                        .photoUrl(pp.getPhotoUrl())
-                        .photoType(pp.getPhotoType())
-                        .build())
-                .toList();
-        productPhotoJpa.saveAll(productPhotos);
+            List<ProductPhoto> productPhotos = productRequest.getPhotoRequestList()
+                    .stream()
+                    .map((pp) -> ProductPhoto.builder()
+                            .product(product)
+                            .photoUrl(pp.getPhotoUrl())
+                            .photoType(pp.getPhotoType())
+                            .build())
+                    .toList();
+            productPhotoJpa.saveAll(productPhotos);
 
-        List<ProductOption> productOptions= productRequest.getProductOptionList()
-                .stream()
-                .map((po)-> ProductOption.builder()
-                        .product(product)
-                        .color(po.getColor())
-                        .productSize(po.getProductSize())
-                        .stock(po.getStock())
-                        .build())
-                .toList(); //.collect(Collectors.toList()) ???
-        productOptionJpa.saveAll(productOptions);
+            List<ProductOption> productOptions = productRequest.getProductOptionList()
+                    .stream()
+                    .map((po) -> ProductOption.builder()
+                            .product(product)
+                            .color(po.getColor())
+                            .productSize(po.getProductSize())
+                            .stock(po.getStock())
+                            .build())
+                    .toList(); //.collect(Collectors.toList()) ???
+            productOptionJpa.saveAll(productOptions);
 
-        return new ResponseDTO(HttpStatus.OK.value(), "Product register success");
+            return new ResponseDTO(HttpStatus.OK.value(), "Product register success");
+        }catch(NullPointerException npe){
+            npe.printStackTrace();
+            throw new NullPointerException("No token"); //run, postman모두에 보임
+        }
     }
 }

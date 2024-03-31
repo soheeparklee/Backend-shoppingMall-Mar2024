@@ -17,11 +17,6 @@ import java.io.IOException;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-//        if(request.getRequestURI().equals("/auth/logout")){
-//            response.setStatus(HttpStatus.OK.value());
-//            response.getWriter().write("Logout Successful");
-//        }else {
             response.sendRedirect("/exceptions/access-denied");
-//        }
     }
 }
