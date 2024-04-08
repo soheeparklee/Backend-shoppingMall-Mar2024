@@ -51,8 +51,20 @@ dependencies {
 
     //security 무슨 에러 난다는거지?
     implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.springframework.security:spring-security-web:5.0.0.RELEASE'
-//    implementation 'org.springframework.security:spring-security-config:5.0.0.RELEASE'
+
+    //이메일 전송 라이브러리
+    // email 인증
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
+    implementation 'javax.mail:mail:1.4.7'
+
+    // Spring Context Support
+    implementation 'org.springframework:spring-context-support:5.3.9'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 
 }
 
