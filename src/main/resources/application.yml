@@ -1,3 +1,5 @@
+
+
 server:
   port:8080
 
@@ -10,17 +12,33 @@ spring:
     exclude:org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
   datasource:
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    username: ENC(dg0o6RGGnI5v2NTvYqiCeA==)
+    password: ENC(3S04ny0whtz9bZ4PvLkMuIFXmnRB0pjy)
     driver-class-name: org.mariadb.jdbc.Driver
-#  url: jdbc:mariadb://sohan2.c7suy242wrpp.eu-west-1.rds.amazonaws.com:3306/shopping_mall?useUnicode=true&characterEncoding=UTF-8
+    #  url: jdbc:mariadb://sohan2.c7suy242wrpp.eu-west-1.rds.amazonaws.com:3306/shopping_mall?useUnicode=true&characterEncoding=UTF-8
     url: jdbc:mariadb://localhost:3306/BackEndProject_2_verSoh?useUnicode=true&characterEncoding=UTF-8
 
   jpa:
     show-sql: true
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_SECRET_KEY}
+    bean: jasyptStringEncryptor
+
+email:
+  address: ENC(9FFPzV1CpODhRFqWQPJg6RDj9yuVaV4jnT0FQvc4oE0=)
+  app-password: ENC(3ViVckG3lnbAeZWKhkWT06ChwI8rfEazJBqXJL5fBak=)
+
+
+
 jwtpassword:
-  source: ${JWT_SECRET_KEY}
+  source: ENC(/CzryCVnQTpLw20DGA4M7ENiN+eg+PDQ)
 
   logging:
     level: debug

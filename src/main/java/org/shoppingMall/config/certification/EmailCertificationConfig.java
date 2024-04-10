@@ -1,4 +1,4 @@
-package org.shoppingMall.config.email;
+package org.shoppingMall.config.certification;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import java.util.Random;
 public class EmailCertificationConfig {
     @Value("${email.address}")
     private String emailAddress;
-    @Value("${email.appPassword}")
+    @Value("${email.app-password}")
     private String appPassword;
 
     @Bean

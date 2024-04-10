@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static org.shoppingMall.config.email.EmailCertificationConfig.generateRandomNumber;
+import static org.shoppingMall.config.certification.EmailCertificationConfig.generateRandomNumber;
 
 @Service
 @RequiredArgsConstructor
 public class EmailCertificationService {
     private final JavaMailSender mailSender;
-    private final RedisUtil redisUtil;
+//    private final RedisUtil redisUtil;
 
     private final int authNumber= generateRandomNumber(100000, 999999); // config 에 미리 만들어둔 메서드
     @Value("${email.address}")
