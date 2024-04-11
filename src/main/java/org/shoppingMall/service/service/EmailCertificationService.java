@@ -1,6 +1,7 @@
 package org.shoppingMall.service.service;
 
 import lombok.RequiredArgsConstructor;
+import org.shoppingMall.web.DTO.email.EmailCheckRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -50,5 +51,8 @@ public class EmailCertificationService {
             e.printStackTrace(); //e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
 
         }
+    }
+
+    public Boolean checkAuthNum(EmailCheckRequest emailCheckRequest) {
     }
 }

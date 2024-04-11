@@ -2,7 +2,9 @@ package org.shoppingMall.web.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.shoppingMall.service.exceptions.*;
+import org.shoppingMall.web.DTO.email.ErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -54,4 +56,11 @@ public class ExceptionControllerAdvice {
         return soe.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException bre){
+        log.error("Bad Request Exception: "+ bre.getMessage());
+        ErrorResponse errorResponse= new ErrorResponse(400, "Bad Request Exception", bre.getDetailMessage(), bre.getRequest());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
