@@ -2,7 +2,7 @@ package org.shoppingMall.web.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
+import org.shoppingMall.service.exceptions.BadRequestException;
 import org.shoppingMall.service.service.EmailCertificationService;
 import org.shoppingMall.service.service.RedisUtil;
 import org.shoppingMall.web.DTO.email.EmailCheckRequest;
@@ -26,7 +26,7 @@ public class EmailCertificationController {
     }
 
     public String checkAuthNum(@RequestBody @Valid EmailCheckRequest emailCheckRequest){
-        Boolean checked= emailCertificationService.checkAuthNum(emailCheckRequest);
+        Boolean checked= emailCertificationService.checkAuthNum(emailCheckRequest.getEmail(), emailCheckRequest.getAuthNum());
         if(checked){
             return "OK";
         }else{

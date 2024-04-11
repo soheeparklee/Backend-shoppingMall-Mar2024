@@ -17,7 +17,7 @@ import static org.shoppingMall.config.certification.EmailCertificationConfig.gen
 @RequiredArgsConstructor
 public class EmailCertificationService {
     private final JavaMailSender mailSender;
-//    private final RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
 
     private final int authNumber= generateRandomNumber(100000, 999999); // config 에 미리 만들어둔 메서드
     @Value("${email.address}")
@@ -46,6 +46,8 @@ public class EmailCertificationService {
             helper.setSubject(title); //이메일의 제목을 설정
             helper.setText(content, true);
             mailSender.send(message); //이메일의 내용 설정 두 번째 매개 변수에 true를 설정하여 html 설정으로한다.
+            //redis에 인증번호 저장 로직 추가
+            redisUtil.setDataExpire(Integer.toString(authNumber), toMail, 60*5L); // redis에 데이터 저장 // 유효기간 5분
         }catch(MessagingException e){ //이메일 서버에 연결할 수 없거나, 잘못된 이메일 주소를 사용하거나, 인증 오류가 발생하는 등 오류
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace(); //e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
@@ -53,6 +55,9 @@ public class EmailCertificationService {
         }
     }
 
-    public Boolean checkAuthNum(EmailCheckRequest emailCheckRequest) {
+    public Boolean checkAuthNum(String email, String authNum) {
+        if(redisUtil.getData(authNum) == null) return false;
+        else if (redisUtil.getData(authNum).equals(email)) return true;
+        else return false;
     }
 }

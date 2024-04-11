@@ -56,7 +56,7 @@ public class ExceptionControllerAdvice {
         return soe.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) //BadRequestException 가져올 떄 직접 만든 것으로 가져오기 주의, java원래 클래스 가져오면 에러
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException bre){
         log.error("Bad Request Exception: "+ bre.getMessage());
