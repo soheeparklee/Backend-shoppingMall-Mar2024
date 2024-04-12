@@ -22,4 +22,13 @@ public class ReviewController {
                                       @RequestBody ReviewRequest reviewRequest){
         return reviewService.registerReview(customUserDetails, productId, reviewRequest);
     }
+
+    @Operation(summary="리뷰 수정")
+    @PutMapping("/update/{reviewId}")
+    public ResponseDTO updateReview(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                    @PathVariable Integer reviewId,
+                                    @RequestBody ReviewRequest reviewRequest){
+        return reviewService.updateReview(customUserDetails, reviewId, reviewRequest);
+    }
+
 }

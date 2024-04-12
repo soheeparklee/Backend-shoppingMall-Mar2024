@@ -49,4 +49,18 @@ public class ReviewService {
                 .build();
         return new ResponseDTO(HttpStatus.OK.value(), "Review Register Success", reviewResponse);
     }
+
+    public ResponseDTO updateReview(CustomUserDetails customUserDetails, Integer reviewId, ReviewRequest reviewRequest) {
+        User user= userJpa.findByEmail(customUserDetails.getEmail())
+                .orElseThrow(()-> new NotFoundException("Cannot find user with email:" + customUserDetails.getEmail()));
+
+        Review review= reviewJpa.findById(reviewId)
+                .orElseThrow(()-> new NotFoundException("Cannot find review with id: " + reviewId));
+
+        review.setReviewContents(reviewRequest.getReviewContents());
+        review.setScore(reviewRequest.getScore());
+        reviewJpa.save(review);
+
+        return new ResponseDTO(HttpStatus.OK.value(), "Review update success");
+    }
 }
