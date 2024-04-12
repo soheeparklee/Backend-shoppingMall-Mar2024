@@ -23,9 +23,15 @@ public class ProductController {
     return productService.registerProduct(customUserDetails, productRequest);
     }
 
-    @Operation(summary="모든 상품 일부 조회(평균 별점 포함)")
+    @Operation(summary="모든 상품 조회(평균 별점 포함)")
     @GetMapping("/find/main-page")
     public ResponseDTO findAllProducts(Pageable pageable){
         return productService.findAllProducts(pageable);
+    }
+
+    @Operation(summary="하나의 상품에 대해 상세조회")
+    @GetMapping("/find/detail/{productId}")
+    public ResponseDTO findProductDetail(@PathVariable Integer productId){
+        return productService.findProductDetail(productId);
     }
 }

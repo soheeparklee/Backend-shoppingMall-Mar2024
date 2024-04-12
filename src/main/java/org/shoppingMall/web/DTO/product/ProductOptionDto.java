@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductOptionList {
+public class ProductOptionDto {
     private Integer optionId;
     private String color;
     private String productSize;
     private Integer stock;
 
-    public ProductOptionList(String color, String productSize, Integer stock) {
+    public ProductOptionDto(String color, String productSize, Integer stock) {
         this.color = color;
         this.productSize = productSize;
         this.stock = stock;

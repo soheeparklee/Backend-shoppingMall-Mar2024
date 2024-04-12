@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhotoRequestList {
+public class PhotoRequestDto {
     private Integer photoId;
     private String photoUrl;
     private Boolean photoType; //true: main pic, false: product pic
 
-    public PhotoRequestList(String photoUrl, Boolean photoType) {
+    public PhotoRequestDto(String photoUrl, Boolean photoType) {
         this.photoUrl = photoUrl;
         this.photoType = photoType;
     }
