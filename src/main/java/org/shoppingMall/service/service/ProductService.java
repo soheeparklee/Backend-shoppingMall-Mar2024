@@ -141,4 +141,22 @@ public class ProductService {
 
         return new ResponseDTO(HttpStatus.OK.value(), "Product detail find success", productDetailResponse);
     }
+
+    public ResponseDTO findProductByCategory(String category) {
+        String[] categoryArr= {"shoes", "pants", "skirt", "shirt"};
+        boolean isCategory= false;
+        for(String c : categoryArr){
+           if( c.equals(category) ) {
+               isCategory= true;
+               break;}
+        }
+        if(!isCategory) throw new NotFoundException("There is no category: "+ category);
+
+
+
+        List<ProductMainResponse> productMainResponseList= productJpa.findByCategory(category);
+        if(productMainResponseList.isEmpty()) throw new NotFoundException("No products found in category: " + category);
+
+        return new ResponseDTO(HttpStatus.OK.value(), "Product found by category success", productMainResponseList);
+    }
 }

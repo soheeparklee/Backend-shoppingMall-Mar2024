@@ -34,4 +34,12 @@ public class ProductController {
     public ResponseDTO findProductDetail(@PathVariable Integer productId){
         return productService.findProductDetail(productId);
     }
+
+    @Operation(summary="카테코리별 조회")
+    @GetMapping("/find")
+    public ResponseDTO findProductByCategory(@RequestParam("category") String category){
+        return productService.findProductByCategory(category);
+    }
+
+
 }
