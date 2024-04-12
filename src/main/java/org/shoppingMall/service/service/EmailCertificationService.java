@@ -1,7 +1,6 @@
 package org.shoppingMall.service.service;
 
 import lombok.RequiredArgsConstructor;
-import org.shoppingMall.web.DTO.email.EmailCheckRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
