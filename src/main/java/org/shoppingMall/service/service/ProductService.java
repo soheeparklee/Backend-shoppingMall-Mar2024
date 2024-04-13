@@ -159,4 +159,22 @@ public class ProductService {
 
         return new ResponseDTO(HttpStatus.OK.value(), "Product found by category success", productMainResponseList);
     }
+
+    public ResponseDTO findProductByKeyword(String keyword) {
+        String newKeyword= keyword.toLowerCase();
+
+        List<Product> products= productJpa.findAllByKeyword();
+        List<ProductMainResponse> productMainResponseList= products
+                .stream()
+                .filter((p)-> p.getProductName().toLowerCase().contains(newKeyword))
+                .map(p-> new ProductMainResponse(
+                        p.getProductId(),
+                        p.getProductName(),
+                        p.getProductPrice(),
+                        p.getCategory(),
+                        p.getProductStatus(),
+                        p.getCreatedAt(),
+                        p.
+                ))
+    }
 }

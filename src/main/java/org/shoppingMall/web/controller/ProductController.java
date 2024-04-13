@@ -36,10 +36,15 @@ public class ProductController {
     }
 
     @Operation(summary="카테코리별 조회")
-    @GetMapping("/find")
+    @GetMapping("/find/category")
     public ResponseDTO findProductByCategory(@RequestParam("category") String category){
         return productService.findProductByCategory(category);
     }
 
+    @Operation(summary="키워드로 상품 조회")
+    @GetMapping("/find/keyword")
+    public ResponseDTO findProductByKeyword(@RequestParam("keyword") String keyword){
+        return productService.findProductByKeyword(keyword);
+    }
 
 }
