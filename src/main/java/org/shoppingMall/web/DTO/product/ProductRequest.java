@@ -16,7 +16,7 @@ public class ProductRequest {
     private Integer productPrice;
     private String category;
     private String productStatus;
-    private List<PhotoRequestDto> photoRequestDto;
-    private List<ProductOptionDto> productOptionDto;
+    private List<PhotoRequestDto> productPhotos;
+    private List<ProductOptionDto> productOptions;
 }
 

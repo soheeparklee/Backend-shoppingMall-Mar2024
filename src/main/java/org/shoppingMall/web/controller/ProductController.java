@@ -41,10 +41,19 @@ public class ProductController {
         return productService.findProductByCategory(category);
     }
 
+    //여러개의 테이블에서 response받아오는가? //1. JPQL에서 JOIN해서 바로 원하는 response
     @Operation(summary="키워드로 상품 조회")
     @GetMapping("/find/keyword")
     public ResponseDTO findProductByKeyword(@RequestParam("keyword") String keyword){
         return productService.findProductByKeyword(keyword);
     }
+
+    @Operation(summary="상품판매 종료(삭제)")
+    @PutMapping("/sold-out/{productId}")
+    public ResponseDTO soldout(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                               @PathVariable Integer productId){
+        return productService.soldout(customUserDetails, productId);
+    }
+
 
 }

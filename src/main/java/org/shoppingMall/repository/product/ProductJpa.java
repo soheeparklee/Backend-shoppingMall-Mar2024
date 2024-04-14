@@ -34,4 +34,15 @@ public interface ProductJpa extends JpaRepository<Product, Integer> {
     )
 
     List<ProductMainResponse> findByCategory(String category);
+
+    @Query(
+            "SELECT new org.shoppingMall.web.DTO.product.ProductMainResponse(" +
+                    "p.productId, p.productName, p.productPrice, p.productStatus, p.category,  p.createdAt, pp.photoUrl, COUNT(DISTINCT r.reviewId), AVG(r.score)) " +
+                    "FROM Product p " +
+                    "LEFT JOIN p.productPhotos pp " +
+                    "LEFT JOIN p.reviews r " +
+                    "WHERE pp.photoType = true AND p.productStatus = 'sell' AND LOWER(p.productName) LIKE %:newKeyword% " +
+                    "GROUP BY p.productId, p.user.userId, p.productName, p.productPrice, p.productStatus, p.category, p.createdAt, pp.photoUrl"
+    )
+    List<ProductMainResponse> findAllByKeyword(String newKeyword);
 }

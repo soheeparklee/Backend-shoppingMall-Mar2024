@@ -12,6 +12,7 @@ import org.shoppingMall.repository.review.ReviewJpa;
 import org.shoppingMall.repository.user.User;
 import org.shoppingMall.repository.user.UserJpa;
 import org.shoppingMall.repository.userDetails.CustomUserDetails;
+import org.shoppingMall.service.exceptions.NotAcceptException;
 import org.shoppingMall.service.exceptions.NotFoundException;
 import org.shoppingMall.service.exceptions.SoldOutException;
 import org.shoppingMall.web.DTO.ResponseDTO;
@@ -49,7 +50,7 @@ public class ProductService {
                     .build();
             productJpa.save(product);
 
-            List<ProductPhoto> productPhotos = productRequest.getPhotoRequestDto()
+            List<ProductPhoto> productPhotos = productRequest.getProductPhotos()
                     .stream()
                     .map((pp) -> ProductPhoto.builder()
                             .product(product)
@@ -59,7 +60,7 @@ public class ProductService {
                     .toList();
             productPhotoJpa.saveAll(productPhotos);
 
-            List<ProductOption> productOptions = productRequest.getProductOptionDto()
+            List<ProductOption> productOptions = productRequest.getProductOptions()
                     .stream()
                     .map((po) -> ProductOption.builder()
                             .product(product)
@@ -160,21 +161,30 @@ public class ProductService {
         return new ResponseDTO(HttpStatus.OK.value(), "Product found by category success", productMainResponseList);
     }
 
+    //여러개의 테이블에서 response받아오는가? //1. JPQL에서 JOIN해서 바로 원하는 response
     public ResponseDTO findProductByKeyword(String keyword) {
         String newKeyword= keyword.toLowerCase();
 
-        List<Product> products= productJpa.findAllByKeyword();
-        List<ProductMainResponse> productMainResponseList= products
-                .stream()
-                .filter((p)-> p.getProductName().toLowerCase().contains(newKeyword))
-                .map(p-> new ProductMainResponse(
-                        p.getProductId(),
-                        p.getProductName(),
-                        p.getProductPrice(),
-                        p.getCategory(),
-                        p.getProductStatus(),
-                        p.getCreatedAt(),
-                        p.
-                ))
+        List<ProductMainResponse> productMainResponseList= productJpa.findAllByKeyword(newKeyword);
+        if(productMainResponseList.isEmpty()) throw new NotFoundException("There is no product find with keyword: "+ keyword);
+        return new ResponseDTO(HttpStatus.OK.value(), "Product found by keyword: " + keyword, productMainResponseList);
+    }
+
+    public ResponseDTO soldout(CustomUserDetails customUserDetails, Integer productId) {
+        User user = userJpa.findByEmail(customUserDetails.getEmail())
+                .orElseThrow(() -> new NotFoundException("Cannot find user with email: " + customUserDetails.getEmail()));
+
+        Product product= productJpa.findById(productId)
+                .orElseThrow(()-> new NotFoundException("Cannot find product with Id: "+ productId));
+
+        if(user.equals(product.getUser())){
+            product.setProductStatus("soldOut");
+            productJpa.save(product);
+
+            return new ResponseDTO(HttpStatus.OK.value(), "Product soldOut");
+        }else{
+            throw new NotAcceptException("You do not have the authorization. You did not register this product.");
+        }
+
     }
 }

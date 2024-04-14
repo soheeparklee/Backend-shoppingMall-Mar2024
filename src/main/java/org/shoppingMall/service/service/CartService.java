@@ -28,7 +28,7 @@ public class CartService {
         User user= userJpa.findByEmailFetchJoin(customUserDetails.getEmail())
                 .orElseThrow(()-> new NotFoundException("Cannot find user with email: " + customUserDetails.getEmail()));
         ProductOption productOption= productOptionJpa.findById(productOptionId)
-                .orElseThrow(()-> new NotFoundException("Cannot find product with ID"+ productOptionId ));
+                .orElseThrow(()-> new NotFoundException("Cannot find product with ID "+ productOptionId ));
         if(productOption.getProduct().getProductStatus().equals("soldOut")){
             throw new SoldOutException("This product is sold out");
         }
